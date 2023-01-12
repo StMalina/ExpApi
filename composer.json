@@ -1,0 +1,23 @@
+{
+    "name": "exprus/expapi",
+    "description": "Library for interacting with exprus CRM via rest api",
+    "type": "library",
+    "license": "none",
+    "autoload": {
+        "psr-4": {
+            "Exprus\\ExpApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vladislav Malinovsky",
+            "email": "personal@stmalina.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.2.0",
+        "ext-curl": "*",
+        "ext-json": "*"
+    }
+}
