@@ -19,8 +19,8 @@ use Exception;
  *   "name" => "тест",
  *   "second_name" => "тест",
  *   "last_name" => "тест",
- *   "email_home" => "value@test.ru",
- *   "phone_home" => "54345314",
+ *   "email" => "value@test.ru",
+ *   "phone" => "54345314",
  *   "assigned_by_id" => "50",
  *   "address" => "не указан"
  * ]);
@@ -73,10 +73,12 @@ class ExpApi {
 	 * array['payload']['name'] string client name for lead
 	 * array['payload']['second_name'] string client second name for lead
 	 * array['payload']['last_name'] string client last name for lead
-	 * array['payload']['email_home'] string client email for lead
-	 * array['payload']['phone_home'] string client phone for lead
+	 * array['payload']['email'] string client email for lead
+	 * array['payload']['phone'] string client phone for lead
 	 * array['payload']['assigned_by_id'] string id of user who will be assigned to lead
 	 * array['payload']['address'] string client address for lead
+	 * array['payload']['utc'] string time zone in +3 format
+	 * array['payload']['comments'] string comments for lead
 	 *
 	 * @param array $payload (See above)
 	 * @throws Exception
@@ -99,10 +101,12 @@ class ExpApi {
 		if (!empty($payload["name"])) $sentData["name"] = $payload["name"];
 		if (!empty($payload["second_name"])) $sentData["second_name"] = $payload["second_name"];
 		if (!empty($payload["last_name"])) $sentData["last_name"] = $payload["last_name"];
-		if (!empty($payload["email_home"])) $sentData["email_home"] = $payload["email_home"];
-		if (!empty($payload["phone_home"])) $sentData["phone_home"] = $payload["phone_home"];
+		if (!empty($payload["email"])) $sentData["email"] = $payload["email"];
+		if (!empty($payload["phone"])) $sentData["phone"] = $payload["phone"];
 		if (!empty($payload["assigned_by_id"])) $sentData["assigned_by_id"] = $payload["assigned_by_id"];
 		if (!empty($payload["address"])) $sentData["address"] = $payload["address"];
+		if (!empty($payload["utc"])) $sentData["utc"] = $payload["utc"];
+		if (!empty($payload["comments"])) $sentData["comments"] = $payload["comments"];
 
 		return $this->addLead($sentData);
 	}
@@ -111,10 +115,13 @@ class ExpApi {
 	 * @throws Exception
 	 */
 	private function addLead($fields){
+		echo '<br>';
+		print_r(json_encode($fields));
+		echo '<br>';
 		try {
 			$curl = curl_init();
 			curl_setopt_array($curl, [
-				CURLOPT_URL => "https://crm.exprus.academy/rest/addlead",
+				CURLOPT_URL => "https://crm.exprus.academy/rest/addcontact",
 				CURLOPT_RETURNTRANSFER => true,
 				CURLOPT_ENCODING => "",
 				CURLOPT_MAXREDIRS => 10,
@@ -160,6 +167,4 @@ class ExpApi {
 			"data" => $message
 		];
 	}
-
-
 }
