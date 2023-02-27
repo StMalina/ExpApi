@@ -115,9 +115,6 @@ class ExpApi {
 	 * @throws Exception
 	 */
 	private function addLead($fields){
-		echo '<br>';
-		print_r(json_encode($fields));
-		echo '<br>';
 		try {
 			$curl = curl_init();
 			curl_setopt_array($curl, [
