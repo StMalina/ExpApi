@@ -102,7 +102,7 @@ class ExpApi {
 		if (!empty($payload["second_name"])) $sentData["second_name"] = $payload["second_name"];
 		if (!empty($payload["last_name"])) $sentData["last_name"] = $payload["last_name"];
 		if (!empty($payload["email"])) $sentData["email"] = $payload["email"];
-		if (!empty($payload["phone"])) $sentData["phone"] = $payload["phone"];
+		if (!empty($payload["phone"])) $sentData["phone"] = preg_replace('/\s|\+|-|\(|\)/','', $payload["phone"]);;
 		if (!empty($payload["assigned_by_id"])) $sentData["assigned_by_id"] = $payload["assigned_by_id"];
 		if (!empty($payload["address"])) $sentData["address"] = $payload["address"];
 		if (!empty($payload["utc"])) $sentData["utc"] = $payload["utc"];
