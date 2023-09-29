@@ -22,11 +22,12 @@ use Exception;
  *   "email" => "value@test.ru",
  *   "phone" => "54345314",
  *   "assigned_by_id" => "50",
- *   "address" => "не указан"
+ *   "address" => "не указан",
+ *   "utm_source" => "garant"
  * ]);
  *
  * echo $result->status; // ok or error
- * echo $result->message; // message
+ * echo $result->data; // message
  *
  */
 class ExpApi {
@@ -78,6 +79,7 @@ class ExpApi {
 	 * array['payload']['assigned_by_id'] string id of user who will be assigned to lead
 	 * array['payload']['address'] string client address for lead
 	 * array['payload']['utc'] string time zone in +3 format
+     * array['payload']['utm_source'] string utm source (take from utm_source get parameter) example: garant
 	 * array['payload']['comments'] string comments for lead
 	 *
 	 * @param array $payload (See above)
@@ -106,6 +108,7 @@ class ExpApi {
 		if (!empty($payload["assigned_by_id"])) $sentData["assigned_by_id"] = $payload["assigned_by_id"];
 		if (!empty($payload["address"])) $sentData["address"] = $payload["address"];
 		if (!empty($payload["utc"])) $sentData["utc"] = $payload["utc"];
+		if (!empty($payload["utm_source"])) $sentData["source"] = $payload["utm_source"];
 		if (!empty($payload["comments"])) $sentData["comments"] = $payload["comments"];
 
 		return $this->addLead($sentData);
@@ -135,6 +138,9 @@ class ExpApi {
 			$response = curl_exec($curl);
 			$err = curl_error($curl);
 
+            var_dump($err);
+            var_dump($response);
+
 			curl_close($curl);
 
 			return $this->responsePreparation(json_decode($response));
@@ -154,7 +160,7 @@ class ExpApi {
 
 		return (object) [
 			"status" => $isError ? "error" : "ok",
-			"data" => $isError ? $data->error : $data->ok
+			"data" => $isError ? json_encode($data) : $data->ok
 		];
 	}
 
