@@ -138,9 +138,6 @@ class ExpApi {
 			$response = curl_exec($curl);
 			$err = curl_error($curl);
 
-            var_dump($err);
-            var_dump($response);
-
 			curl_close($curl);
 
 			return $this->responsePreparation(json_decode($response));
