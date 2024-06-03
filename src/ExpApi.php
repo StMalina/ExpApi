@@ -24,6 +24,13 @@ use Exception;
  *   "assigned_by_id" => "50",
  *   "address" => "не указан",
  *   "utm_source" => "garant"
+ *   "utm" => [
+ *     "source" => "garant"
+ *     "medium" => ""
+ *     "campaign" => ""
+ *     "term" => ""
+ *     "content" => ""
+ *   ]
  * ]);
  *
  * echo $result->status; // ok or error
@@ -79,8 +86,14 @@ class ExpApi {
 	 * array['payload']['assigned_by_id'] string id of user who will be assigned to lead
 	 * array['payload']['address'] string client address for lead
 	 * array['payload']['utc'] string time zone in +3 format
-     * array['payload']['utm_source'] string utm source (take from utm_source get parameter) example: garant
+	 * array['payload']['utm_source'] string utm source (take from utm_source get parameter) example: garant
 	 * array['payload']['comments'] string comments for lead
+	 * array['payload']['utm'] array of utm parameters for lead
+	 * array['payload']['utm']['source'] string utm source (take from utm_source get parameter) example: garant
+	 * array['payload']['utm']['medium'] string utm medium (take from utm_medium get parameter)
+	 * array['payload']['utm']['campaign'] string utm campaign (take from utm_campaign get parameter)
+	 * array['payload']['utm']['term'] string utm term (take from utm_term get parameter)
+	 * array['payload']['utm']['content'] string utm content (take from utm_content get parameter)
 	 *
 	 * @param array $payload (See above)
 	 * @throws Exception
@@ -111,6 +124,18 @@ class ExpApi {
 		if (!empty($payload["utm_source"])) $sentData["source"] = $payload["utm_source"];
 		if (!empty($payload["comments"])) $sentData["comments"] = $payload["comments"];
 
+		if (!empty($payload["utm"])) {
+		        $utm = $payload["utm"];
+		        $utmParams = [];
+		        if (!empty($utm["source"])) $utmParams[] = "utm_source=" . $utm["source"];
+		        if (!empty($utm["medium"])) $utmParams[] = "utm_medium=" . $utm["medium"];
+		        if (!empty($utm["campaign"])) $utmParams[] = "utm_campaign=" . $utm["campaign"];
+		        if (!empty($utm["term"])) $utmParams[] = "utm_term=" . $utm["term"];
+		        if (!empty($utm["content"])) $utmParams[] = "utm_content=" . $utm["content"];
+			if (!empty($utmParams)) {
+				$sentData["utm"] = implode("&", $utmParams);
+		        }
+		}
 		return $this->addLead($sentData);
 	}
 
