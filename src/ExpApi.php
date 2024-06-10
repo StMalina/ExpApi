@@ -125,15 +125,15 @@ class ExpApi {
 		if (!empty($payload["comments"])) $sentData["comments"] = $payload["comments"];
 
 		if (!empty($payload["utm"])) {
-		        $utm = $payload["utm"];
-		        $utmParams = [];
-		        if (!empty($utm["source"])) $utmParams[] = "utm_source=" . $utm["source"];
-		        if (!empty($utm["medium"])) $utmParams[] = "utm_medium=" . $utm["medium"];
-		        if (!empty($utm["campaign"])) $utmParams[] = "utm_campaign=" . $utm["campaign"];
-		        if (!empty($utm["term"])) $utmParams[] = "utm_term=" . $utm["term"];
-		        if (!empty($utm["content"])) $utmParams[] = "utm_content=" . $utm["content"];
-			if (!empty($utmParams)) {
-				$sentData["utm"] = implode("&", $utmParams);
+		        $utms = $payload["utms"];
+		        $utmsParams = [];
+		        if (!empty($utms["source"])) $utmsParams[] = "utm_source=" . $utms["source"];
+		        if (!empty($utms["medium"])) $utmsParams[] = "utm_medium=" . $utms["medium"];
+		        if (!empty($utms["campaign"])) $utmsParams[] = "utm_campaign=" . $utms["campaign"];
+		        if (!empty($utms["term"])) $utmsParams[] = "utm_term=" . $utms["term"];
+		        if (!empty($utms["content"])) $utmsParams[] = "utm_content=" . $utms["content"];
+			if (!empty($utmsParams)) {
+				$sentData["utm"] = implode("&", $utmsParams);
 		        }
 		}
 		return $this->addLead($sentData);
