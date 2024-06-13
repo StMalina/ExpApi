@@ -125,7 +125,7 @@ class ExpApi {
 		if (!empty($payload["comments"])) $sentData["comments"] = $payload["comments"];
 
 		if (!empty($payload["utm"])) {
-		        $utms = $payload["utms"];
+		        $utms = $payload["utm"];
 		        $utmsParams = [];
 		        if (!empty($utms["source"])) $utmsParams[] = "utm_source=" . $utms["source"];
 		        if (!empty($utms["medium"])) $utmsParams[] = "utm_medium=" . $utms["medium"];
@@ -133,7 +133,7 @@ class ExpApi {
 		        if (!empty($utms["term"])) $utmsParams[] = "utm_term=" . $utms["term"];
 		        if (!empty($utms["content"])) $utmsParams[] = "utm_content=" . $utms["content"];
 			if (!empty($utmsParams)) {
-				$sentData["utm"] = implode("&", $utmsParams);
+				$sentData["utms"] = implode("&", $utmsParams);
 		        }
 		}
 		return $this->addLead($sentData);
